@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Chamados - SmartCall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="../js/lista-chamados.js"></script>
+    <link rel="stylesheet" href="../css/style.css"> </head>
+<body class="dashboard-body">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">SmartCall</a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="dashboard.html">Painel de Controle</a></li>
+                <li class="active"><a href="#">Chamados</a></li>
+                <li><a href="#">Relatórios</a></li>
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="index.html" class="logout-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                <span>Sair</span>
+            </a>
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+                </div>
+                <div class="user-details">
+                    <span class="user-name">Micael Leal</span>
+                    <span class="user-role">Scrum Master</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="main-header">
+            <h2>Chamados</h2>
+            <div class="header-actions">
+                <a href="chat-ia.html" class="btn btn-primary">Novo Chamado</a>
+            </div>
+        </header>
+
+        <div class="filter-bar card">
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="todos">Todos</button>
+                <button class="filter-tab" data-filter="aberto">Abertos</button>
+                <button class="filter-tab" data-filter="em-andamento">Em Andamento</button>
+                <button class="filter-tab" data-filter="encerrado">Encerrados</button>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Pesquisar por ID ou título...">
+            </div>
+        </div>
+
+        <div class="tickets-table card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Status</th>
+                        <th>Prioridade</th>
+                        <th>Atribuído a</th>
+                        <th>Última Atualização</th>
+                    </tr>
+                </thead>
+                <tbody id="tickets-tbody">
+                    <tr class="clickable-row" data-href="chamado.html" data-status="em-andamento">
+                        <td>#734</td>
+                        <td>Impressora não funciona</td>
+                        <td><span class="status-badge status-progress">Em Andamento</span></td>
+                        <td><span class="priority-badge priority-high">Alta</span></td>
+                        <td>Técnico Micael</td>
+                        <td>12/09/2025 09:30</td>
+                    </tr>
+                    <tr class="clickable-row" data-href="chamado.html" data-status="aberto">
+                        <td>#735</td>
+                        <td>Sistema lento após atualização</td>
+                        <td><span class="status-badge status-open">Aberto</span></td>
+                        <td><span class="priority-badge priority-medium">Média</span></td>
+                        <td>-</td>
+                        <td>12/09/2025 08:45</td>
+                    </tr>
+                    <tr class="clickable-row" data-href="chamado.html" data-status="encerrado">
+                        <td>#732</td>
+                        <td>Solicitação de acesso à pasta X</td>
+                        <td><span class="status-badge status-closed">Encerrado</span></td>
+                        <td><span class="priority-badge priority-low">Baixa</span></td>
+                        <td>Atendente Manu</td>
+                        <td>11/09/2025 17:21</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+    <script type="module" src="js/lista-chamados.js"></script>
+
+</body>
+</html>

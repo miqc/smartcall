@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Novo Produto</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Adicionar Novo Produto</h1>
+        <a href="index.html">Voltar para a Lista</a>
+    </header>
+
+    <main>
+        <form id="form-adicionar-produto">
+            <div class="form-group">
+                <label for="produto-nome">Nome do Produto:</label>
+                <input type="text" id="produto-nome" required>
+            </div>
+            <div class="form-group">
+                <label for="produto-preco">Preço:</label>
+                <input type="number" id="produto-preco" step="0.01" required>
+            </div>
+            <button type="submit">Salvar Produto</button>
+        </form>
+    </main>
+
+    <script type="module" src="js/adicionar-produto.js"></script>
+</body>
+</html>

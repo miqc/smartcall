@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamado #734 - SmartCall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="dashboard-body">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">SmartCall</a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="dashboard.html">Painel de Controle</a></li>
+                <li class="active"><a href="#">Chamados</a></li>
+                <li><a href="#">Relatórios</a></li>
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                <span>Sair</span>
+            </a>
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+                </div>
+                <div class="user-details">
+                    <span class="user-name">Micael Leal</span>
+                    <span class="user-role">Scrum Master</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content chat-layout">
+                <header class="main-header">
+            <div class="header-title-section">
+                <a href="lista-chamados.html" class="back-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                    <span>Voltar</span>
+                </a>
+                <div class="ticket-info">
+                    <h2>Chamado #734: Impressora não funciona</h2>
+                    <span class="status-badge status-open">Aberto</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="#" class="btn btn-secondary">Anexar Arquivo</a>
+                <a href="#" class="btn btn-primary">Fechar Chamado</a>
+            </div>
+        </header>
+
+        <div class="chat-messages">
+            <div class="message message-received">
+                <div class="message-bubble">
+                    <div class="message-sender">Atendente (IA)</div>
+                    <p>Olá! Sou o assistente virtual do SmartCall. Para agilizar seu atendimento, por favor, me informe o número de patrimônio da impressora.</p>
+                </div>
+                <div class="message-timestamp">13:30</div>
+            </div>
+
+            <div class="message message-sent">
+                <div class="message-bubble">
+                    <p>Boa tarde. O número é BR-PRN-01827.</p>
+                </div>
+                <div class="message-timestamp">13:32</div>
+            </div>
+
+            <div class="message message-received">
+                <div class="message-bubble">
+                    <div class="message-sender">Atendente (IA)</div>
+                    <p>Obrigado. Verifiquei que esta impressora está offline. Já direcionei um técnico para verificar a conexão de rede no local. A prioridade deste chamado foi definida como 'Alta'.</p>
+                </div>
+                <div class="message-timestamp">13:33</div>
+            </div>
+        </div>
+
+        <div class="chat-composer">
+            <textarea placeholder="Digite sua mensagem..."></textarea>
+            <button class="btn btn-primary">Enviar</button>
+        </div>
+    </main>
+
+</body>
+</html>

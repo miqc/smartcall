@@ -1,0 +1,15 @@
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.AssemblyInfoInputs.cache
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.AssemblyInfo.cs
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.csproj.CoreCompileInputs.cache
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\bin\Debug\net9.0\SmartCall.Application.deps.json
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\bin\Debug\net9.0\SmartCall.Application.dll
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\bin\Debug\net9.0\SmartCall.Application.pdb
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\bin\Debug\net9.0\SmartCall.Domain.dll
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\bin\Debug\net9.0\SmartCall.Domain.pdb
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.csproj.AssemblyReference.cache
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCal.036AC136.Up2Date
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.dll
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\refint\SmartCall.Application.dll
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.pdb
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\ref\SmartCall.Application.dll
