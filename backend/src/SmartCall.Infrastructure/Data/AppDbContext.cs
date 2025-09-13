@@ -9,6 +9,8 @@ namespace SmartCall.Infrastructure.Data
 
         public DbSet<Produto> Produtos { get; set; }
 
+        public DbSet<Usuario> Usuarios { get; set; }
+
         // ADICIONE ESTE MÉTODO
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -2,6 +2,12 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <script>
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            window.location.href = 'dashboard.html'; // Se já tem token, vai para o painel
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - SmartCall</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +19,10 @@
 
     <header class="navbar">
         <div class="container">
-            <a href="index.html" class="logo">SmartCall</a>
+            <div class="logo-area">
+                <a href="index.html" class="logo">SmartCall</a>
+                <span class="logo-tagline">powered by InfinityWare</span>
+            </div>
             <nav>
                 <ul>
                     <li><a href="index.html#sobre">Sobre</a></li>
@@ -33,22 +42,26 @@
             <h2 class="login-title">Crie sua Conta</h2>
             <p class="login-subtitle">Rápido e fácil, vamos começar.</p>
             
-            <form id="cadastro-form">
+            <form id="cadastro-form" novalidate>
                 <div class="form-group">
-                    <label for="nome">Nome Completo</label>
-                    <input type="text" id="nome" placeholder="Seu nome completo" required>
+                    <label for="nome">Nome completo</label>
+                    <input type="text" id="nome" placeholder="Nome" required>
+                    <span class="error-message"></span>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Seu e-mail" required>
+                    <span class="error-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="password">Senha</label>
-                    <input type="password" id="password" placeholder="Crie uma senha forte" required>
+                    <input type="password" id="password" placeholder="Sua senha" required>
+                    <span class="error-message"></span>
                 </div>
                 <div class="form-group">
-                    <label for="confirm-password">Confirmar Senha</label>
-                    <input type="password" id="confirm-password" placeholder="Repita sua senha" required>
+                    <label for="confirm-password">Repetir Senha</label>
+                    <input type="password" id="confirm-password" placeholder="Repetir senha" required>
+                    <span class="error-message"></span>
                 </div>
                 <button type="submit" class="btn btn-primary btn-full-width">Cadastrar</button>
             </form>
@@ -60,4 +73,5 @@
     </div>
 
 </body>
+<script type="module" src="../js/cadastro.js"></script>
 </html>

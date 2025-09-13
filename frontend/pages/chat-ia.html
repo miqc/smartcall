@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <script src="../js/auth-guard.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat IA - SmartCall</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,14 +14,15 @@
 
     <aside class="sidebar">
         <div class="sidebar-header">
-            <a href="index.html" class="logo">SmartCall</a>
-        </div>
+    <a class="logo">SmartCall</a>
+    <span class="logo-tagline">powered by InfinityWare</span>
+</div>
         <nav class="sidebar-nav">
             <ul>
                 <li><a href="dashboard.html">Painel de Controle</a></li>
                 <li><a href="lista-chamados.html">Chamados</a></li>
-                <li><a href="#">Relatórios</a></li>
-                <li><a href="#">Configurações</a></li>
+                <li><a href="relatorios.html">Relatórios</a></li>
+                <li><a href="configuracoes.html">Configurações</a></li>
             </ul>
         </nav>
         <div class="sidebar-footer">
@@ -33,9 +35,9 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
                 </div>
                 <div class="user-details">
-                    <span class="user-name">Micael Leal</span>
-                    <span class="user-role">Scrum Master</span>
-                </div>
+                <span id="userNameDisplay" class="user-name"></span>
+                <span id="userRoleDisplay" class="user-role"></span>
+            </div>
             </div>
         </div>
     </aside>
@@ -46,7 +48,7 @@
                 <h2>Chat com Assistente Virtual</h2>
             </div>
             <div class="user-info">
-                <span>Bem-vindo, Micael!</span>
+                <span id="welcomeUserName"></span>
             </div>
         </header>
 
@@ -67,6 +69,6 @@
             <button class="btn btn-primary">Enviar</button>
         </div>
     </main>
-
+        <script type="module" src="../js/sidebar.js"></script>
 </body>
 </html>

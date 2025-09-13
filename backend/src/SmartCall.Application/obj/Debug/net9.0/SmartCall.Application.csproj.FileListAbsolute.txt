@@ -13,3 +13,4 @@ C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\refint\SmartCall.Application.dll
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.pdb
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\ref\SmartCall.Application.dll
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Application\obj\Debug\net9.0\SmartCall.Application.sourcelink.json

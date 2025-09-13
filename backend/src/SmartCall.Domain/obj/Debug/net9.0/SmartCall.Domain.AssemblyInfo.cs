@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartCall.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74ed0cd76d500d93bc3f778c6c6192f7985b806c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f95bb52cf09fb3585712174702535f75cfc03a34")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartCall.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartCall.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

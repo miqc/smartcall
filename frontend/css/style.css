@@ -31,6 +31,7 @@ body {
     background: #fff;
     padding: 1rem 0;
     border-bottom: 1px solid var(--light-gray);
+    transition: box-shadow 0.3s ease-out;
 }
 
 .navbar .container {
@@ -984,4 +985,315 @@ body {
 
 .sidebar .logo-tagline {
     color: #a7b1d3; /* Cor clara que já usávamos */
+}
+
+/* --- ANIMAÇÕES DA HERO SECTION --- */
+
+/* Estado inicial dos elementos que serão animados */
+.hero-text, .hero-image {
+    opacity: 0; /* Começam totalmente transparentes */
+    transform: translateY(30px); /* Começam 30px abaixo da posição final */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Define a suavidade da animação */
+}
+
+/* A imagem terá um pequeno atraso para um efeito mais dinâmico */
+.hero-image {
+    transition-delay: 0.2s; /* A animação da imagem começa 0.2s depois */
+}
+
+/* Classe que será adicionada via JavaScript para ativar a animação */
+.hero-text.visible,
+.hero-image.visible {
+    opacity: 1; /* Torna o elemento totalmente visível */
+    transform: translateY(0); /* Move o elemento para sua posição final */
+}
+
+/* Estilo que será aplicado ao navbar quando a página for rolada */
+.navbar-scrolled {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    animation: slideDown 0.3s;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+/* Espaço para compensar a navbar sticky dinâmica */
+.navbar-placeholder {
+    display: none;
+}
+.navbar-scrolled + .navbar-placeholder {
+    display: block;
+    height: 80px; /* ajuste conforme altura da navbar */
+}
+
+/* --- ESTILOS PARA A PÁGINA DE RELATÓRIOS --- */
+
+.filter-bar .date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.date-range label {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.date-range input[type="date"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Gráfico de barras maior que o de rosca */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Deixa o layout dos gráficos responsivo em telas menores */
+@media (max-width: 992px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- ESTILOS PARA O MODAL (VERSÃO MELHORADA) --- */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(35, 46, 82, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2.5rem; /* Aumentei o padding para mais respiro */
+    border-radius: 12px; /* Bordas um pouco mais arredondadas */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px;
+    transform: scale(0.95) translateY(10px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--dark-color);
+    font-weight: 700; /* Título mais forte */
+}
+
+/* Corrigido: Estilo apenas para o 'X' de fechar */
+.modal-close-x {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-color);
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+.modal-close-x:hover {
+    color: var(--dark-color);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--light-gray);
+}
+
+/* Reutilizando e melhorando estilos de formulário */
+.modal-body .form-group select,
+.modal-body .form-group textarea,
+.modal-body .form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    background-color: #f8f9fa; /* Fundo sutil para os inputs */
+}
+
+.modal-body .form-group select {
+    appearance: none; /* Remove a seta padrão do select */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+
+.modal-body .form-group textarea {
+    resize: vertical;
+}
+
+/* --- ESTILOS PARA VALIDAÇÃO DE FORMULÁRIO --- */
+
+.form-group.has-error input {
+    border-color: #dc3545; /* Vermelho que já usamos */
+    background-color: #fff8f8; /* Fundo levemente rosado */
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: none; /* Escondido por padrão */
+    margin-top: 0.4rem;
+}
+
+.form-group.has-error .error-message {
+    display: block; /* Visível quando houver erro */
+}
+
+/* --- NOVOS ESTILOS PARA A PÁGINA 404 ESTRUTURADA --- */
+
+.error-section {
+    background-color: var(--secondary-color);
+    padding: 4rem 0;
+    display: flex;
+    align-items: center;
+    /* Tenta fazer a seção ocupar a maior parte da tela visível */
+    min-height: calc(100vh - 158px); /* 100% da altura da tela - altura aproximada do header e footer */
+}
+
+.error-section .container {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.error-text {
+    flex: 1;
+}
+
+.error-eyebrow {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.error-text h1 {
+    font-size: 3rem;
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.error-text p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    max-width: 500px;
+}
+
+.error-image {
+    flex: 1;
+}
+
+.error-image img {
+    max-width: 100%;
+}
+
+/* --- ESTILOS ADICIONAIS PARA ABAS DE CONFIGURAÇÕES --- */
+
+/* Painéis de conteúdo das abas */
+.settings-pane {
+    display: none; /* Escondido por padrão */
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.settings-pane.active {
+    display: flex; /* Visível quando a aba está ativa */
+}
+
+/* Utilitário para o cabeçalho dos cards */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Botões de Ação na Tabela */
+.action-btn {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.action-btn.edit-user-btn:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.action-btn.delete-user-btn {
+    color: #dc3545;
+}
+
+.action-btn.delete-user-btn:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+}
+
+/* Estilo para botões de ação perigosa */
+.btn-danger {
+    background-color: #dc3545; /* Vermelho */
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Vermelho mais escuro */
 }

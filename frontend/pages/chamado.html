@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <script src="../js/auth-guard.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chamado #734 - SmartCall</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,14 +14,15 @@
 
     <aside class="sidebar">
         <div class="sidebar-header">
-            <a href="index.html" class="logo">SmartCall</a>
-        </div>
+    <a class="logo">SmartCall</a>
+    <span class="logo-tagline">powered by InfinityWare</span>
+</div>
         <nav class="sidebar-nav">
             <ul>
                 <li><a href="dashboard.html">Painel de Controle</a></li>
-                <li class="active"><a href="#">Chamados</a></li>
-                <li><a href="#">Relatórios</a></li>
-                <li><a href="#">Configurações</a></li>
+                <li class="active"><a href="lista-chamados.html">Chamados</a></li>
+                <li><a href="relatorios.html">Relatórios</a></li>
+                <li><a href="configuracoes.html">Configurações</a></li>
             </ul>
         </nav>
         <div class="sidebar-footer">
@@ -88,6 +90,6 @@
             <button class="btn btn-primary">Enviar</button>
         </div>
     </main>
-
+        <script type="module" src="../js/sidebar.js"></script>
 </body>
 </html>

@@ -2,49 +2,108 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <script src="../js/auth-guard.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Chamados - SmartCall</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="../js/lista-chamados.js"></script>
-    <link rel="stylesheet" href="../css/style.css"> </head>
+    <link rel="stylesheet" href="../css/style.css"> 
+</head>
 <body class="dashboard-body">
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="index.html" class="logo">SmartCall</a>
+</head>
+<body class="dashboard-body">
+    <div id="newTicketModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Abrir Novo Chamado</h2>
+            <button class="modal-close-x">&times;</button>
         </div>
-        <nav class="sidebar-nav">
-            <ul>
-                <li><a href="dashboard.html">Painel de Controle</a></li>
-                <li class="active"><a href="#">Chamados</a></li>
-                <li><a href="#">Relatórios</a></li>
-                <li><a href="#">Configurações</a></li>
-            </ul>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="index.html" class="logout-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                <span>Sair</span>
-            </a>
-            <div class="user-profile">
-                <div class="user-avatar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+        <div class="modal-body">
+            <form id="new-ticket-form">
+                <div class="form-group">
+                    <label for="ticket-title">Título do Chamado</label>
+                    <input type="text" id="ticket-title" placeholder="Ex: Impressora não está funcionando" required>
                 </div>
-                <div class="user-details">
-                    <span class="user-name">Micael Leal</span>
-                    <span class="user-role">Scrum Master</span>
+                <div class="form-group">
+                    <label for="ticket-category">Categoria</label>
+                    <select id="ticket-category" required>
+                        <option value="" disabled selected>Selecione uma categoria</option>
+                        <option value="hardware">Problema de Hardware</option>
+                        <option value="software">Dúvida de Software</option>
+                        <option value="access">Acesso e Permissões</option>
+                        <option value="network">Rede</option>
+                        <option value="other">Outros</option>
+                    </select>
                 </div>
+                <div class="form-group">
+                    <label for="ticket-description">Descrição</label>
+                    <textarea id="ticket-description" rows="4" placeholder="Descreva o problema em detalhes..." required></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+             <button type="button" class="btn btn-secondary modal-close-btn">Cancelar</button>
+            <button type="submit" form="new-ticket-form" class="btn btn-primary">Criar Chamado</button>
+        </div>
+    </div>
+</div>
+    </div>
+
+     <aside class="sidebar">
+    <div class="sidebar-header">
+    <a class="logo">SmartCall</a>
+    <span class="logo-tagline">powered by InfinityWare</span>
+</div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li>
+                <a href="dashboard.html">
+                    <span>Painel de Controle</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="lista-chamados.html">
+                    <span>Chamados</span>
+                </a>
+            </li>
+            <li>
+                <a href="relatorios.html">
+                    <span>Relatórios</span>
+                </a>
+            </li>
+            <li>
+                <a href="configuracoes.html">
+                    <span>Configurações</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="index.html" class="logout-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+            <span>Sair</span>
+        </a>
+        <div class="user-profile">
+            <div class="user-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+            </div>
+            <div class="user-details">
+                <span class="user-name">Micael Leal</span>
+                <span class="user-role">Scrum Master</span>
             </div>
         </div>
+    </div>
     </aside>
 
     <main class="main-content">
         <header class="main-header">
             <h2>Chamados</h2>
             <div class="header-actions">
-                <a href="chat-ia.html" class="btn btn-primary">Novo Chamado</a>
+                <a href="#" class="btn btn-primary" id="openNewTicketModalBtn">Novo Chamado</a>
             </div>
         </header>
 
@@ -102,7 +161,8 @@
         </div>
     </main>
     
-    <script type="module" src="js/lista-chamados.js"></script>
-
+    <script type="module" src="../js/lista-chamados.js"></script>
+    <script type="module" src="../js/modal.js"></script>
+    <script type="module" src="../js/sidebar.js"></script>
 </body>
 </html>

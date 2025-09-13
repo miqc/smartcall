@@ -29,3 +29,32 @@ export async function createProduct(productData) {
         return null;
     }
 }
+
+// ... (funções getProducts, createProduct, etc. continuam aqui)
+
+export async function login(email, senha) {
+    const response = await fetch(`${API_BASE_URL}/Auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha })
+    });
+    
+    if (!response.ok) {
+        throw new Error('Falha no login');
+    }
+    return await response.json(); // Retorna { token, nome }
+}
+
+export async function registrar(dadosUsuario) {
+    const response = await fetch(`${API_BASE_URL}/Auth/registro`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dadosUsuario)
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Falha no registro');
+    }
+    return await response.json();
+}

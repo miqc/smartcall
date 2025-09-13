@@ -9,3 +9,4 @@ C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Domain\obj\Debu
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Domain\obj\Debug\net9.0\refint\SmartCall.Domain.dll
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Domain\obj\Debug\net9.0\SmartCall.Domain.pdb
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Domain\obj\Debug\net9.0\ref\SmartCall.Domain.dll
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Domain\obj\Debug\net9.0\SmartCall.Domain.sourcelink.json

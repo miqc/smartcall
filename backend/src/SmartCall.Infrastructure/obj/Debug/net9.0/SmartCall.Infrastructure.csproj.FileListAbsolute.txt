@@ -17,3 +17,4 @@ C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Infrastructure\
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Infrastructure\obj\Debug\net9.0\SmartCall.Infrastructure.pdb
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Infrastructure\obj\Debug\net9.0\SmartCall.Infrastructure.genruntimeconfig.cache
 C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Infrastructure\obj\Debug\net9.0\ref\SmartCall.Infrastructure.dll
+C:\Users\Micael\Documents\GitHub\smartcall\backend\src\SmartCall.Infrastructure\obj\Debug\net9.0\SmartCall.Infrastructure.sourcelink.json
