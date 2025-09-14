@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { showToast } from './toasts.js';
-import { getUsuarios, editarUsuario } from './services/apiService.js';
+import { getUsuarios, editarUsuario, excluirUsuario } from './services/apiService.js';
 import { atualizarPerfil } from './services/apiService.js';
 
 document.addEventListener('DOMContentLoaded', () => {

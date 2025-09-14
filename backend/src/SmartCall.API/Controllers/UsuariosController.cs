@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using SmartCall.Application.DTOs;
 using SmartCall.Infrastructure.Data;
 using SmartCall.Domain.Entities;
- using SmartCall.Domain.Enums;
+using SmartCall.Domain.Enums;
+using System.Security.Claims;
 
 
 namespace SmartCall.API.Controllers
@@ -39,33 +40,55 @@ namespace SmartCall.API.Controllers
         }
 
         [HttpPut("{id}")] // Rota: PUT /api/usuarios/1
- [Authorize] // Apenas Admins podem editar usuários
- public async Task<IActionResult> EditarUsuario(int id, [FromBody] EditarUsuarioRequestDto request)
- {
-     var usuario = await _context.Usuarios.FindAsync(id);
-     if (usuario == null)
-     {
-         return NotFound("Usuário não encontrado.");
-     }
+        [Authorize] // Apenas Admins podem editar usuários
+        public async Task<IActionResult> EditarUsuario(int id, [FromBody] EditarUsuarioRequestDto request)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
 
-     if (!Enum.TryParse<PapelUsuario>(request.Cargo, true, out var papel))
-     {
-         return BadRequest(new { message = "O cargo especificado é inválido." });
-     }
+            if (!Enum.TryParse<PapelUsuario>(request.Cargo, true, out var papel))
+            {
+                return BadRequest(new { message = "O cargo especificado é inválido." });
+            }
 
-     // Atualiza os dados da entidade
-     usuario.NomeCompleto = request.NomeCompleto;
-     usuario.Email = request.Email;
-     usuario.Cargo = papel;
+            // Atualiza os dados da entidade
+            usuario.NomeCompleto = request.NomeCompleto;
+            usuario.Email = request.Email;
+            usuario.Cargo = papel;
 
-     await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-     return Ok(new { message = "Usuário atualizado com sucesso!" });
- }
-        
+            return Ok(new { message = "Usuário atualizado com sucesso!" });
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize] // Apenas Admins podem excluir usuários
+        public async Task<IActionResult> ExcluirUsuario(int id)
+        {
+            // Medida de segurança para impedir que um admin exclua a própria conta
+            var loggedInUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (id == loggedInUserId)
+            {
+                return BadRequest(new { message = "Você não pode excluir sua própria conta." });
+            }
+
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+
+            _context.Usuarios.Remove(usuario);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Usuário excluído com sucesso!" });
+        }
     }
 
-    
-    
-    
+
+
+
 }
