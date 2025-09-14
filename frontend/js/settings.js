@@ -1,46 +1,50 @@
 // @ts-nocheck
 import { showToast } from './toasts.js';
-import { alterarSenha, atualizarPerfil, getUsuarios } from './services/apiService.js';
+import { alterarSenha, atualizarPerfil, getUsuarios, editarUsuario } from './services/apiService.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- LÓGICA PARA CARREGAR USUÁRIOS ---
     const userTableBody = document.getElementById('user-table-body');
+    const editModal = document.getElementById('editUserModal');
+    const editUserForm = document.getElementById('edit-user-form');
     
     async function carregarUsuarios() {
-        if (!userTableBody) return;
-        userTableBody.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>'; // Feedback de carregamento
+    if (!userTableBody) return;
+    userTableBody.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
 
-        try {
-            const usuarios = await getUsuarios();
-            userTableBody.innerHTML = ''; // Limpa a tabela
+    try {
+        const usuarios = await getUsuarios();
+        userTableBody.innerHTML = ''; 
 
-            if (usuarios.length === 0) {
-                userTableBody.innerHTML = '<tr><td colspan="4">Nenhum usuário encontrado.</td></tr>';
-                return;
-            }
+        if (usuarios.length === 0) {
+            userTableBody.innerHTML = '<tr><td colspan="4">Nenhum usuário encontrado.</td></tr>';
+            return;
+        }
 
-            usuarios.forEach(user => {
-                const tr = document.createElement('tr');
-                tr.dataset.userId = user.id;
-                tr.dataset.userName = user.nomeCompleto;
+        usuarios.forEach(user => {
+            const tr = document.createElement('tr');
+            // GARANTA QUE ESTAS 4 LINHAS EXISTEM E ESTÃO CORRETAS
+            tr.dataset.userId = user.id;
+            tr.dataset.userName = user.nomeCompleto;
+            tr.dataset.userEmail = user.email;
+            tr.dataset.userRole = user.cargo;
 
-                // Adapta a cor do badge com base no cargo
-                let badgeClass = 'status-closed'; // cinza padrão
-                if (user.cargo === 'Administrador') badgeClass = 'status-open'; // azul
-                if (user.cargo === 'Tecnico') badgeClass = 'status-progress'; // amarelo
+            let badgeClass = 'status-closed';
+            if (user.cargo === 'Administrador') badgeClass = 'status-open';
+            if (user.cargo === 'Tecnico') badgeClass = 'status-progress';
 
-                tr.innerHTML = `
-                    <td>${user.nomeCompleto}</td>
-                    <td>${user.email}</td>
-                    <td><span class="status-badge ${badgeClass}">${user.cargo}</span></td>
-                    <td>
-                        <button class="action-btn edit-user-btn">Alterar</button>
-                        <button class="action-btn delete-user-btn">Excluir</button>
-                    </td>
-                `;
-                userTableBody.appendChild(tr);
-            });
+            tr.innerHTML = `
+                <td>${user.nomeCompleto}</td>
+                <td>${user.email}</td>
+                <td><span class="status-badge ${badgeClass}">${user.cargo}</span></td>
+                <td>
+                    <button class="action-btn edit-user-btn">Alterar</button>
+                    <button class="action-btn delete-user-btn">Excluir</button>
+                </td>
+            `;
+            userTableBody.appendChild(tr);
+        });
 
         } catch (error) {
             userTableBody.innerHTML = `<tr><td colspan="4" class="error-message">${error.message}</td></tr>`;
@@ -73,24 +77,41 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-    // --- LÓGICA PARA O MODAL DE EDIÇÃO ---
-    const editModal = document.getElementById('editUserModal');
-    if (editModal) {
-        const openEditModalBtns = document.querySelectorAll('.edit-user-btn');
-        const closeEditModalBtns = editModal.querySelectorAll('.modal-close-x, .modal-close-btn');
+   // --- LÓGICA DE EVENTOS PARA A TABELA DE USUÁRIOS (DELEGAÇÃO) ---
+    if (userTableBody) {
+        userTableBody.addEventListener('click', (event) => {
+            const editBtn = event.target.closest('.edit-user-btn');
+            const deleteBtn = event.target.closest('.delete-user-btn');
 
-        openEditModalBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
+            // SE O BOTÃO DE EDITAR FOI CLICADO
+            if (editBtn && editModal) {
+                // 1. Encontra a linha (tr) pai do botão
+                const userRow = editBtn.closest('tr');
+
+                // 2. Lê os dados guardados nos atributos data-* da linha
+                const userId = userRow.dataset.userId;
+                const userName = userRow.dataset.userName;
+                const userEmail = userRow.dataset.userEmail;
+                const userRole = userRow.dataset.userRole;
+
+                // 3. Seleciona os campos do formulário no modal e preenche com os dados
+                document.getElementById('user-name').value = userName;
+                document.getElementById('user-email').value = userEmail;
+                document.getElementById('user-role').value = userRole;
+                
+                // 4. Guarda o ID do usuário no próprio formulário para usarmos depois ao salvar
+                if(editUserForm) {
+                    editUserForm.dataset.editingUserId = userId;
+                }
+
+                // 5. Abre o modal
                 editModal.classList.add('active');
-            });
-        });
-        closeEditModalBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                editModal.classList.remove('active');
-            });
-        });
-        editModal.addEventListener('click', (event) => {
-            if(event.target === editModal) editModal.classList.remove('active');
+            }
+
+            // SE O BOTÃO DE EXCLUIR FOI CLICADO (lógica que já tínhamos)
+            if (deleteBtn && deleteModal) {
+                // ... (código para abrir o modal de exclusão continua o mesmo)
+            }
         });
     }
 
@@ -137,6 +158,44 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteModal.addEventListener('click', (event) => {
             if(event.target === deleteModal) deleteModal.classList.remove('active');
         });
+    }
+
+    // --- FUNÇÃO PARA CARREGAR USUÁRIOS ---
+    async function carregarUsuarios() {
+        if (!userTableBody) return;
+        userTableBody.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
+        try {
+            const usuarios = await getUsuarios();
+            userTableBody.innerHTML = '';
+            if (usuarios.length === 0) {
+                userTableBody.innerHTML = '<tr><td colspan="4">Nenhum usuário encontrado.</td></tr>';
+                return;
+            }
+            usuarios.forEach(user => {
+                const tr = document.createElement('tr');
+                tr.dataset.userId = user.id;
+                tr.dataset.userName = user.nomeCompleto;
+                tr.dataset.userEmail = user.email;
+                tr.dataset.userRole = user.cargo;
+
+                let badgeClass = 'status-closed';
+                if (user.cargo === 'Administrador') badgeClass = 'status-open';
+                if (user.cargo === 'Tecnico') badgeClass = 'status-progress';
+
+                tr.innerHTML = `
+                    <td>${user.nomeCompleto}</td>
+                    <td>${user.email}</td>
+                    <td><span class="status-badge ${badgeClass}">${user.cargo}</span></td>
+                    <td>
+                        <button class="action-btn edit-user-btn">Alterar</button>
+                        <button class="action-btn delete-user-btn">Excluir</button>
+                    </td>
+                `;
+                userTableBody.appendChild(tr);
+            });
+        } catch (error) {
+            userTableBody.innerHTML = `<tr><td colspan="4" class="error-message">${error.message}</td></tr>`;
+        }
     }
 
    // --- LÓGICA PARA O FORMULÁRIO DE ALTERAR SENHA ---
@@ -264,5 +323,48 @@ document.addEventListener('DOMContentLoaded', () => {
             emailInput.value = obfuscateEmail(userEmail);
         }
 
+    // --- LÓGICA DE EVENTOS PARA A TABELA DE USUÁRIOS (DELEGAÇÃO) ---
+    if (userTableBody) {
+        userTableBody.addEventListener('click', (event) => {
+            const editBtn = event.target.closest('.edit-user-btn');
+            const deleteBtn = event.target.closest('.delete-user-btn');
 
-});
+            if (editBtn && editModal) {
+                // Lógica para abrir o modal de edição
+                editModal.classList.add('active');
+            }
+
+            if (deleteBtn && deleteModal) {
+                // Lógica para abrir o modal de exclusão
+                const userRow = deleteBtn.closest('tr');
+                const userName = userRow.dataset.userName;
+                const userId = userRow.dataset.userId;
+
+                const userNameToDeleteSpan = document.getElementById('user-name-to-delete');
+                const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+                userNameToDeleteSpan.textContent = userName;
+                confirmDeleteBtn.dataset.userIdToDelete = userId;
+                
+                deleteModal.classList.add('active');
+            }
+        });
+    }
+
+    // --- LÓGICA PARA FECHAR OS MODAIS ---
+    [editModal, deleteModal].forEach(modal => {
+        if (modal) {
+            const closeBtns = modal.querySelectorAll('.modal-close-x, .modal-close-btn');
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => modal.classList.remove('active'));
+            });
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) modal.classList.remove('active');
+            });
+        }
+    });
+
+    // --- LÓGICA DOS FORMULÁRIOS (PERFIL E SENHA) ---
+    // (O resto do seu código para os formulários continua aqui)
+});    
+

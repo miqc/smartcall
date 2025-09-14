@@ -102,3 +102,22 @@ export async function getUsuarios() {
     }
     return await response.json();
 }
+
+export async function editarUsuario(userId, dadosUsuario) {
+    const token = localStorage.getItem('authToken');
+    if (!token) throw new Error('Usuário não autenticado.');
+
+    const response = await fetch(`${API_BASE_URL}/usuarios/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(dadosUsuario)
+    });
+
+    if (!response.ok) {
+        await handleResponseError(response);
+    }
+    return await response.json();
+}
