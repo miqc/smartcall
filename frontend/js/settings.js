@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // 4. Guarda o ID do usuário no próprio formulário para usarmos depois ao salvar
                 if(editUserForm) {
+                    editUserForm.dataset.originalUserName = userRow.dataset.userName; 
                     editUserForm.dataset.editingUserId = userId;
                 }
 

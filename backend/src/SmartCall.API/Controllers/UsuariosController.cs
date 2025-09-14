@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using SmartCall.Application.DTOs;
 using SmartCall.Infrastructure.Data;
 using SmartCall.Domain.Entities;
+ using SmartCall.Domain.Enums;
+
 
 namespace SmartCall.API.Controllers
 {
@@ -20,11 +22,11 @@ namespace SmartCall.API.Controllers
         }
 
         // A URL final será GET /api/usuarios
-        [HttpGet] 
+        [HttpGet]
         public async Task<IActionResult> ListarUsuarios()
         {
             var usuarios = await _context.Usuarios
-                .Select(u => new UsuarioDto 
+                .Select(u => new UsuarioDto
                 {
                     Id = u.Id,
                     NomeCompleto = u.NomeCompleto,
@@ -32,8 +34,38 @@ namespace SmartCall.API.Controllers
                     Cargo = u.Cargo.ToString()
                 })
                 .ToListAsync();
-            
+
             return Ok(usuarios);
         }
+
+        [HttpPut("{id}")] // Rota: PUT /api/usuarios/1
+ [Authorize] // Apenas Admins podem editar usuários
+ public async Task<IActionResult> EditarUsuario(int id, [FromBody] EditarUsuarioRequestDto request)
+ {
+     var usuario = await _context.Usuarios.FindAsync(id);
+     if (usuario == null)
+     {
+         return NotFound("Usuário não encontrado.");
+     }
+
+     if (!Enum.TryParse<PapelUsuario>(request.Cargo, true, out var papel))
+     {
+         return BadRequest(new { message = "O cargo especificado é inválido." });
+     }
+
+     // Atualiza os dados da entidade
+     usuario.NomeCompleto = request.NomeCompleto;
+     usuario.Email = request.Email;
+     usuario.Cargo = papel;
+
+     await _context.SaveChangesAsync();
+
+     return Ok(new { message = "Usuário atualizado com sucesso!" });
+ }
+        
     }
+
+    
+    
+    
 }
