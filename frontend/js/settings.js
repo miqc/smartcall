@@ -1,4 +1,7 @@
 // @ts-nocheck
+import { alterarSenha } from './services/apiService.js';
+import { showToast } from './toasts.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- LÓGICA PARA TROCA DE ABAS ---
     const tabs = document.querySelectorAll('.settings-tabs li a');
@@ -82,4 +85,74 @@ document.addEventListener('DOMContentLoaded', () => {
             if(event.target === deleteModal) deleteModal.classList.remove('active');
         });
     }
+
+   // --- LÓGICA PARA O FORMULÁRIO DE ALTERAR SENHA ---
+    const formAlterarSenha = document.getElementById('form-alterar-senha');
+
+    if (formAlterarSenha) {
+        // Funções de erro (podemos reutilizar as do login/cadastro se estivessem em um arquivo comum)
+        const showError = (input, message) => {
+            const formGroup = input.parentElement;
+            formGroup.classList.add('has-error');
+            const errorElement = formGroup.querySelector('.error-message');
+            errorElement.textContent = message;
+        };
+        const clearError = (input) => {
+            const formGroup = input.parentElement;
+            formGroup.classList.remove('has-error');
+            const errorElement = formGroup.querySelector('.error-message');
+            errorElement.textContent = '';
+        };
+
+        formAlterarSenha.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const senhaAtualInput = document.getElementById('senha-atual');
+            const novaSenhaInput = document.getElementById('nova-senha');
+            const confirmarSenhaInput = document.getElementById('confirmar-nova-senha');
+            const allInputs = [senhaAtualInput, novaSenhaInput, confirmarSenhaInput];
+
+            // Limpa erros antigos
+            allInputs.forEach(clearError);
+
+            // Validação no frontend
+            let isValid = true;
+            if (!senhaAtualInput.value) {
+                showError(senhaAtualInput, 'Preencha este campo.');
+                isValid = false;
+            }
+            if (!novaSenhaInput.value) {
+                showError(novaSenhaInput, 'Preencha este campo.');
+                isValid = false;
+            } else if (novaSenhaInput.value.length < 6) {
+                showError(novaSenhaInput, 'A nova senha deve ter no mínimo 6 caracteres.');
+                isValid = false;
+            }
+            if (novaSenhaInput.value !== confirmarSenhaInput.value) {
+                showError(confirmarSenhaInput, 'As senhas não coincidem.');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+
+            // Se for válido, envia para a API
+            const dadosSenha = {
+                senhaAtual: senhaAtualInput.value,
+                novaSenha: novaSenhaInput.value,
+                confirmarNovaSenha: confirmarSenhaInput.value
+            };
+
+            try {
+                const resultado = await alterarSenha(dadosSenha);
+                showToast(resultado.message || 'Senha alterada com sucesso!', 'success');
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaa")
+                formAlterarSenha.reset(); // Limpa o formulário
+                console.log("bbbbbbbbbbbbbbbbbbbbb")
+            } catch (error) {
+                // Mostra o erro da API (ex: senha atual incorreta) no primeiro campo
+                showError(senhaAtualInput, error.message);
+            }
+        });
+    }
+
 });

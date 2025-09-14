@@ -1,36 +1,17 @@
 import { API_BASE_URL } from '../config.js';
 
-// Função para buscar todos os produtos (já existe)
-export async function getProducts() {
-    //... código existente
-}
-
-// ADICIONE ESTA NOVA FUNÇÃO
-export async function createProduct(productData) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/Produtos`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productData)
-        });
-
-        if (!response.ok) {
-            // Se a resposta não for 2xx, lança um erro
-            throw new Error('Erro ao criar o produto: ' + response.statusText);
-        }
-        
-        return await response.json(); // Retorna o produto criado (com ID)
-
-    } catch (error) {
-        console.error("Erro ao criar produto:", error);
-        // Retorna null ou lança o erro para quem chamou tratar
-        return null;
+// Função auxiliar para lidar com erros de forma inteligente
+async function handleResponseError(response) {
+    const contentType = response.headers.get("content-type");
+    // Se a resposta de erro for JSON, podemos extrair a mensagem específica
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Erro ${response.status}`);
+    } else {
+        // Se não for JSON (ex: 401 Unauthorized com corpo vazio), usamos o status
+        throw new Error(response.statusText || `Erro ${response.status}`);
     }
 }
-
-// ... (funções getProducts, createProduct, etc. continuam aqui)
 
 export async function login(email, senha) {
     const response = await fetch(`${API_BASE_URL}/Auth/login`, {
@@ -40,9 +21,9 @@ export async function login(email, senha) {
     });
     
     if (!response.ok) {
-        throw new Error('Falha no login');
+        await handleResponseError(response);
     }
-    return await response.json(); // Retorna { token, nome }
+    return await response.json();
 }
 
 export async function registrar(dadosUsuario) {
@@ -53,8 +34,33 @@ export async function registrar(dadosUsuario) {
     });
 
     if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Falha no registro');
+        await handleResponseError(response);
     }
     return await response.json();
 }
+
+export async function alterarSenha(dadosSenha) {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        throw new Error('Usuário não autenticado.');
+    }
+
+    const response = await fetch(`${API_BASE_URL}/Perfil/alterar-senha`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(dadosSenha)
+    });
+
+    if (!response.ok) {
+        await handleResponseError(response);
+    }
+
+    // A resposta de sucesso pode ou não ter corpo. Se não tiver, retorna um objeto de sucesso.
+    const responseText = await response.text();
+    return responseText ? JSON.parse(responseText) : { message: 'Operação bem-sucedida' };
+}
+
+// ... adicione outras funções de API aqui no futuro
