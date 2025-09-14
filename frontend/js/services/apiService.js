@@ -83,3 +83,22 @@ export async function atualizarPerfil(dadosPerfil) {
     }
     return await response.json();
 }
+
+export async function getUsuarios() {
+    const token = localStorage.getItem('authToken');
+    if (!token) throw new Error('Usuário não autenticado.');
+
+    // URL ATUALIZADA para corresponder ao novo controller
+    const response = await fetch(`${API_BASE_URL}/usuarios`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        // Removemos o tratamento específico de 403, pois agora todos têm acesso
+        await handleResponseError(response);
+    }
+    return await response.json();
+}

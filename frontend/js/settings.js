@@ -1,24 +1,77 @@
 // @ts-nocheck
-import { alterarSenha, atualizarPerfil } from './services/apiService.js';
 import { showToast } from './toasts.js';
+import { alterarSenha, atualizarPerfil, getUsuarios } from './services/apiService.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- LÓGICA PARA TROCA DE ABAS ---
-    const tabs = document.querySelectorAll('.settings-tabs li a');
-    const panes = document.querySelectorAll('.settings-pane');
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', (event) => {
-            event.preventDefault();
-            tabs.forEach(t => t.parentElement.classList.remove('active'));
-            panes.forEach(p => p.classList.remove('active'));
-            tab.parentElement.classList.add('active');
-            const targetPane = document.querySelector(tab.dataset.target);
-            if (targetPane) {
-                targetPane.classList.add('active');
+    // --- LÓGICA PARA CARREGAR USUÁRIOS ---
+    const userTableBody = document.getElementById('user-table-body');
+    
+    async function carregarUsuarios() {
+        if (!userTableBody) return;
+        userTableBody.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>'; // Feedback de carregamento
+
+        try {
+            const usuarios = await getUsuarios();
+            userTableBody.innerHTML = ''; // Limpa a tabela
+
+            if (usuarios.length === 0) {
+                userTableBody.innerHTML = '<tr><td colspan="4">Nenhum usuário encontrado.</td></tr>';
+                return;
             }
+
+            usuarios.forEach(user => {
+                const tr = document.createElement('tr');
+                tr.dataset.userId = user.id;
+                tr.dataset.userName = user.nomeCompleto;
+
+                // Adapta a cor do badge com base no cargo
+                let badgeClass = 'status-closed'; // cinza padrão
+                if (user.cargo === 'Administrador') badgeClass = 'status-open'; // azul
+                if (user.cargo === 'Tecnico') badgeClass = 'status-progress'; // amarelo
+
+                tr.innerHTML = `
+                    <td>${user.nomeCompleto}</td>
+                    <td>${user.email}</td>
+                    <td><span class="status-badge ${badgeClass}">${user.cargo}</span></td>
+                    <td>
+                        <button class="action-btn edit-user-btn">Alterar</button>
+                        <button class="action-btn delete-user-btn">Excluir</button>
+                    </td>
+                `;
+                userTableBody.appendChild(tr);
+            });
+
+        } catch (error) {
+            userTableBody.innerHTML = `<tr><td colspan="4" class="error-message">${error.message}</td></tr>`;
+        }
+    }
+
+   // --- LÓGICA CORRETA E UNIFICADA PARA TROCA DE ABAS ---
+        const tabs = document.querySelectorAll('.settings-tabs li a');
+        const panes = document.querySelectorAll('.settings-pane');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                // 1. Lógica visual: remove a classe 'active' de todos
+                tabs.forEach(t => t.parentElement.classList.remove('active'));
+                panes.forEach(p => p.classList.remove('active'));
+
+                // 2. Lógica visual: adiciona a classe 'active' apenas no item clicado
+                tab.parentElement.classList.add('active');
+                const targetPane = document.querySelector(tab.dataset.target);
+                if (targetPane) {
+                    targetPane.classList.add('active');
+                }
+
+                // 3. Lógica de dados: verifica se a aba de usuários foi clicada e carrega os dados
+                if (tab.dataset.target === '#usuarios-content') {
+                    carregarUsuarios();
+                }
+            });
         });
-    });
 
     // --- LÓGICA PARA O MODAL DE EDIÇÃO ---
     const editModal = document.getElementById('editUserModal');
@@ -209,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = document.getElementById('email');
         if (emailInput && userEmail) {
             emailInput.value = obfuscateEmail(userEmail);
-    }
+        }
+
 
 });

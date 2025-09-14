@@ -108,36 +108,18 @@
                         <h3 class="card-title">Gerenciar Usuários</h3>
                     </div>
                     <div class="tickets-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Nome Completo</th>
-                                    <th>Email</th>
-                                    <th>Cargo</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr data-user-id="1" data-user-name="Micael Leal">
-                                    <td>Micael Leal</td>
-                                    <td>micael.leal@example.com</td>
-                                    <td><span class="status-badge status-open">Administrador</span></td>
-                                    <td>
-                                        <button class="action-btn edit-user-btn">Alterar</button>
-                                        <button class="action-btn delete-user-btn">Excluir</button>
-                                    </td>
-                                </tr>
-                                <tr data-user-id="2" data-user-name="Manoella Moura">
-                                    <td>Manoella Moura</td>
-                                    <td>manoella.moura@example.com</td>
-                                    <td><span class="status-badge status-progress">Técnico</span></td>
-                                    <td>
-                                        <button class="action-btn edit-user-btn">Alterar</button>
-                                        <button class="action-btn delete-user-btn">Excluir</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome Completo</th>
+                                <th>Email</th>
+                                <th>Cargo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                        </tbody>
+                    </table>
                     </div>
                 </div>
             </div>
