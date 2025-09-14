@@ -8,8 +8,5 @@ namespace SmartCall.Application.DTOs
         [MaxLength(100)]
         public string NomeCompleto { get; set; }
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
     }
 }

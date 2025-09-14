@@ -4,6 +4,10 @@ using SmartCall.Application.DTOs;
 using SmartCall.Infrastructure.Data;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using SmartCall.Domain.Entities;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SmartCall.API.Controllers
 {
@@ -13,10 +17,13 @@ namespace SmartCall.API.Controllers
     public class PerfilController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public PerfilController(AppDbContext context)
+
+        public PerfilController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpPost("alterar-senha")]
@@ -51,7 +58,7 @@ namespace SmartCall.API.Controllers
             return Ok(new { message = "Senha alterada com sucesso!" });
         }
 
-                // ... (usings e a classe PerfilController já existem)
+        // ... (usings e a classe PerfilController já existem)
 
         // O método AlterarSenha já está aqui...
 
@@ -59,28 +66,27 @@ namespace SmartCall.API.Controllers
         [HttpPut("atualizar-dados")]
         public async Task<IActionResult> AtualizarPerfil([FromBody] AtualizarPerfilRequestDto request)
         {
-            // Pega o ID do usuário logado a partir do token JWT
             var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userIdString == null) return Unauthorized();
-            
+
             var userId = int.Parse(userIdString);
             var usuario = await _context.Usuarios.FindAsync(userId);
 
             if (usuario == null) return NotFound("Usuário não encontrado.");
 
-            // Atualiza os dados do usuário com os dados recebidos do formulário
+            // Atualiza apenas os dados necessários
             usuario.NomeCompleto = request.NomeCompleto;
-            usuario.Email = request.Email;
 
-            _context.Usuarios.Update(usuario);
-            await _context.SaveChangesAsync();
+            // REMOVEMOS a linha "_context.Usuarios.Update(usuario);"
+            // O Entity Framework já está rastreando as mudanças no objeto 'usuario'.
 
-            // Retorna os dados atualizados para o frontend
-            return Ok(new { message = "Perfil atualizado com sucesso!", nome = usuario.NomeCompleto });
+            await _context.SaveChangesAsync(); // Apenas isso é necessário para salvar
+
+            return Ok(new
+            {
+                message = "Perfil atualizado com sucesso!",
+                nome = usuario.NomeCompleto,
+            });
         }
-
     }
-
-    
 }
-

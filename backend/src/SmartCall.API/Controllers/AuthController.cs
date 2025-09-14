@@ -59,9 +59,16 @@ namespace SmartCall.API.Controllers
             }
 
             var token = GerarTokenJwt(usuario);
-            
+
             // ALTERAÇÃO AQUI: Adicionado "cargo" à resposta
-            return Ok(new { token = token, nome = usuario.NomeCompleto, cargo = usuario.Cargo.ToString() });        }
+            return Ok(new
+            {
+                token = token,
+                nome = usuario.NomeCompleto,
+                cargo = usuario.Cargo.ToString(),
+                email = usuario.Email
+            });      
+     }
 
         private string GerarTokenJwt(Usuario usuario)
         {

@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('userName', data.nome);
             // ADICIONE ESTA LINHA
             localStorage.setItem('userRole', data.cargo);
+            localStorage.setItem('userEmail', data.email);
             
             // Redireciona para o painel
             window.location.href = 'dashboard.html';

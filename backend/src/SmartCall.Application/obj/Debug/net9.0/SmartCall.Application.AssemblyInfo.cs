@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartCall.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96daa5e549de138b3c3c047f2d36b4f5cb7d4d78")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ef939528cb8ce0c58659f3d152ec1f17e800bf4")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartCall.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartCall.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

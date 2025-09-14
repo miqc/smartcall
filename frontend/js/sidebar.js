@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault(); 
 
             // Remove os dados de autenticação do armazenamento local
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userName');
+            localStorage.clear();
+
 
             // Redireciona para a página de login
             window.location.href = 'login.html';

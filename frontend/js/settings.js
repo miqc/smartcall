@@ -191,4 +191,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const obfuscateEmail = (email) => {
+        if (!email || email.indexOf('@') === -1) {
+            return '';
+         }
+
+    const [user, domain] = email.split('@');
+        if (user.length <= 3) {
+            return `${user.substring(0, 1)}**@${domain}`;
+        }
+
+    const start = user.substring(0, 3);
+         return `${start}***@${domain}`;
+     };
+
+    const userEmail = localStorage.getItem('userEmail');
+    const emailInput = document.getElementById('email');
+        if (emailInput && userEmail) {
+            emailInput.value = obfuscateEmail(userEmail);
+    }
+
 });
