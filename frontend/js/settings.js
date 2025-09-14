@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { alterarSenha } from './services/apiService.js';
+import { alterarSenha, atualizarPerfil } from './services/apiService.js';
 import { showToast } from './toasts.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -151,6 +151,42 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 // Mostra o erro da API (ex: senha atual incorreta) no primeiro campo
                 showError(senhaAtualInput, error.message);
+            }
+        });
+    }
+
+    const formPerfil = document.getElementById('form-perfil-publico');
+
+    if (formPerfil) {
+        const nomeCompletoInput = document.getElementById('nome-completo');
+        const emailInput = document.getElementById('email');
+
+        // Pré-preenche o formulário com os dados do localStorage ao carregar a página
+        nomeCompletoInput.value = localStorage.getItem('userName') || '';
+        // Poderíamos fazer o mesmo para o email se o tivéssemos salvo no login
+
+        formPerfil.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const dadosPerfil = {
+                nomeCompleto: nomeCompletoInput.value,
+                email: emailInput.value
+            };
+
+            try {
+                // Importe a função 'atualizarPerfil' no topo do arquivo!
+                const resultado = await atualizarPerfil(dadosPerfil);
+
+                // Atualiza o nome no localStorage com o novo valor
+                localStorage.setItem('userName', resultado.nome);
+
+                // Atualiza o nome exibido na tela em tempo real
+                document.getElementById('userNameDisplay').textContent = resultado.nome;
+                document.getElementById('welcomeUserName').textContent = `Bem-vindo, ${resultado.nome}!`;
+
+                showToast(resultado.message, 'success');
+            } catch (error) {
+                showToast(error.message, 'error');
             }
         });
     }

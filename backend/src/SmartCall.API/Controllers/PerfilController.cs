@@ -50,5 +50,37 @@ namespace SmartCall.API.Controllers
 
             return Ok(new { message = "Senha alterada com sucesso!" });
         }
+
+                // ... (usings e a classe PerfilController já existem)
+
+        // O método AlterarSenha já está aqui...
+
+        // ADICIONE ESTE NOVO MÉTODO
+        [HttpPut("atualizar-dados")]
+        public async Task<IActionResult> AtualizarPerfil([FromBody] AtualizarPerfilRequestDto request)
+        {
+            // Pega o ID do usuário logado a partir do token JWT
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdString == null) return Unauthorized();
+            
+            var userId = int.Parse(userIdString);
+            var usuario = await _context.Usuarios.FindAsync(userId);
+
+            if (usuario == null) return NotFound("Usuário não encontrado.");
+
+            // Atualiza os dados do usuário com os dados recebidos do formulário
+            usuario.NomeCompleto = request.NomeCompleto;
+            usuario.Email = request.Email;
+
+            _context.Usuarios.Update(usuario);
+            await _context.SaveChangesAsync();
+
+            // Retorna os dados atualizados para o frontend
+            return Ok(new { message = "Perfil atualizado com sucesso!", nome = usuario.NomeCompleto });
+        }
+
     }
+
+    
 }
+

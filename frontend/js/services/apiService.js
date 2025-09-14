@@ -63,4 +63,23 @@ export async function alterarSenha(dadosSenha) {
     return responseText ? JSON.parse(responseText) : { message: 'Operação bem-sucedida' };
 }
 
-// ... adicione outras funções de API aqui no futuro
+// ...
+
+export async function atualizarPerfil(dadosPerfil) {
+    const token = localStorage.getItem('authToken');
+    if (!token) throw new Error('Usuário não autenticado.');
+
+    const response = await fetch(`${API_BASE_URL}/Perfil/atualizar-dados`, {
+        method: 'PUT', // Usamos PUT para atualização
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(dadosPerfil)
+    });
+
+    if (!response.ok) {
+        await handleResponseError(response);
+    }
+    return await response.json();
+}
