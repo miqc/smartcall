@@ -75,4 +75,7 @@ Siga estes passos no seu terminal (PowerShell ou Git Bash).
 
 Para trabalhar no projeto, você sempre precisará de **dois processos rodando ao mesmo tempo**:
 
-1.  **Um terminal rodando o backend
+1.  **Um terminal rodando o backend C#** com o comando `dotnet run`.
+2.  **O "Live Server" do VS Code** servindo os arquivos do frontend.
+
+O site (no endereço do Live Server) fará as chamadas para a sua API (no endereço do `dotnet run`) para buscar e salvar dados.
